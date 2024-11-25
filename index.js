@@ -19,7 +19,7 @@ app.post('/send-email', async (req, res) => {
         <div>
             <h1 style="font-size: 1.7rem; color: #5E17DD; margin-bottom: 1rem;">Welcome onboard!</h1>
             <p>Dear <span style="font-weight: 600;">${userName}</span>, of ${schoolName}.</p>
-            <p style="line-height: 1.4em;">Thank you for registering for our upcoming <span style="font-weight: 600;">${webinarDetails.theme}</span> We’re thrilled to have you with us as we explore <span style="font-weight: 600; text-transform: lowercase; border-bottom: 2px solid #5E17DD;">${webinarDetails.topic}.</p>
+            <p style="line-height: 1.4em;">Thank you for registering for our upcoming <span style="font-weight: 600;">${webinarDetails.theme}</span> We’re thrilled to have you with us as we explore <span style="font-weight: 600; text-transform: lowercase; border-bottom: 2px solid #5E17DD;">${webinarDetails.topic}</p>
         </div>
         <div style="margin-top: .5rem;">
             <h3>Webinar Details</h3>
