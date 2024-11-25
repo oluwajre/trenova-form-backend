@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Send Confirmation Email</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .form-container {
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      width: 100%;
+      max-width: 400px;
+    }
+    h2 {
+      margin-bottom: 15px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input[type="text"], input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+    }
+    button:disabled {
+      background-color: #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Send Confirmation Email</h2>
+    <form id="sendEmailForm" onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label for="userName">Full Name:</label>
+        <input type="text" id="userName" name="userName" required />
+      </div>
+      
+      <div class="form-group">
+        <label for="userEmail">Email Address:</label>
+        <input type="email" id="userEmail" name="userEmail" required />
+      </div>
+
+      <div class="form-group">
+        <p class="error" id="errorMessage"></p>
+      </div>
+
+      <button type="submit" id="submitBtn">Send Confirmation Email</button>
+    </form>
+  </div>
+
+  <script>
+    // Handle the form submission
+    async function handleSubmit(event) {
+      event.preventDefault();
+
+      const userName = document.getElementById('userName').value;
+      const userEmail = document.getElementById('userEmail').value;
+      const errorMessage = document.getElementById('errorMessage');
+      const submitBtn = document.getElementById('submitBtn');
+
+      // Basic validation
+      if (!userName || !userEmail) {
+        errorMessage.textContent = 'Please fill in all fields.';
+        return;
+      }
+
+      // Disable the submit button to prevent multiple clicks
+      submitBtn.disabled = true;
+      errorMessage.textContent = ''; // Clear previous error messages
+
+      try {
+        const response = await fetch('http://localhost:5000/send-email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            to: userEmail, // Recipient email
+            userName, // User's name
+            webDetails: 'Scale Up Series Webinar details or other content here',
+          }),
+        });
+
+        const result = await response.text();
+
+        if (response.ok) {
+          alert('Confirmation email sent successfully!');
+        } else {
+          throw new Error(result);
+        }
+      } catch (error) {
+        errorMessage.textContent = `Error: ${error.message}`;
+      } finally {
+        submitBtn.disabled = false;
+      }
+    }
+  </script>
+
+</body>
+</html>
