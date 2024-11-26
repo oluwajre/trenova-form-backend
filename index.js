@@ -11,7 +11,7 @@ app.use(express.json()); // Parse JSON request body
 app.post('/send-email', async (req, res) => {
   const { to, userName, schoolName, webinarDetails } = req.body;
 
-  const subjectContent = `Thank you for joining the Scale Up Series Webinar`;
+  const subjectContent = `Thank you for joining the Scale Up Series Webinar 3.7`;
 
   // Default HTML content if no HTML is provided
   const htmlContent = `
