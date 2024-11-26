@@ -11,7 +11,7 @@ app.use(express.json()); // Parse JSON request body
 app.post('/send-email', async (req, res) => {
   const { to, userName, schoolName, webinarDetails } = req.body;
 
-  const subjectContent = `Thank you for joining the Scale Up Series Webinar 3.7`;
+  const subjectContent = `Thank you for joining the Scale Up Series Webinar`;
 
   // Default HTML content if no HTML is provided
   const htmlContent = `
@@ -50,7 +50,7 @@ app.post('/send-email', async (req, res) => {
   try {
     // Send email with HTML content
     const info = await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+      from: `${webinarDetails.theme} <${process.env.EMAIL_USER}>`,
       to,
       subject: subjectContent,
       html: htmlContent, // Only sending HTML content
