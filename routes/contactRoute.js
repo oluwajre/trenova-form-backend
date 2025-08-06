@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 const router = express.Router();
 
 router.post('/contact/send-message', async (req, res) => {
-    const { name, email, message, subject, phone, receiver } = req.body;
+    const { name, email, message, subject, phone, receiver, company } = req.body;
 
     if (!name || !email || !message) {
         return res.status(400).json({ success: false, message: 'Name, email, and message are required.' });
@@ -21,7 +21,7 @@ router.post('/contact/send-message', async (req, res) => {
         from: email,
         to: receiver,
         subject: subject || 'New Contact Form Message',
-        text: `${name} has contacted you from your Trinitwin website contact form, below are the details of the Form:\n\nName: ${name}\nEmail: ${email}\nPhone Number: ${phone || 'Phone Number not provided'}\n\nMessage:\n${message}\n\nKindly reply ${name}.`,
+        text: `${name} has contacted you from your ${company} website contact form, below are the details of the Form:\n\nName: ${name}\nEmail: ${email}\nPhone Number: ${phone || 'Phone Number not provided'}\n\nMessage:\n${message}\n\nKindly send a reply to ${name}.`,
     };
 
     try {
